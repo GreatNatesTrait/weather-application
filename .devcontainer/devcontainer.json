@@ -1,0 +1,23 @@
+{
+  "name": "dotnet-env-container",
+  "dockerFile": "Dockerfile",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "dbaeumer.vscode-eslint",
+        "angular.ng-template"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "forwardPorts": [5000, 4200],
+      "containerEnv": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "mounts": [
+        "source=/home/nate/Downloads/second-app,target=/workspaces/second-app,type=bind,consistency=cached"
+      ]
+    }
+  }
+}
