@@ -7,7 +7,7 @@ COPY weather-app/ClientApp/package*.json ./
 RUN npm ci
 
 COPY weather-app/ClientApp/ .
-RUN npm run build
+RUN ng build --configuration production --aot
 
 # Stage 2: Build the .NET app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS publish-stage
