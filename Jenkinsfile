@@ -46,5 +46,29 @@ pipeline {
                 }      
             }              
         }   
+
+
+        stage('Deploy to EKS') {
+      environment {
+        AWS_REGION = 'us-east-1'
+        EKS_CLUSTER_NAME = 'TFEKSWorkshop-cluster-sg'
+      }
+      steps {
+         withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: "new",
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+     
+        
+        // Update kubeconfig to connect to EKS cluster
+        sh 'aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
+        
+        // Apply Kubernetes deployment
+        sh 'kubectl apply -f deployment.yaml'
+      }
+      }
+    }
     }
 }
