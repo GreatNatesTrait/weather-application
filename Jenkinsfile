@@ -51,7 +51,7 @@ pipeline {
         stage('Deploy to EKS') {
       environment {
         AWS_REGION = 'us-east-1'
-        EKS_CLUSTER_NAME = 'TFEKSWorkshop-cluster-sg'
+        EKS_CLUSTER_NAME = 'TFEKSWorkshop-cluster'
       }
       steps {
          withCredentials([[
