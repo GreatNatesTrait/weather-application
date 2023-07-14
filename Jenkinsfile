@@ -16,22 +16,22 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                dir('weather-app') {
-                    // Build ASP.NET app
-                    sh 'dotnet build'
-                }
+        // stage('Build') {
+        //     steps {
+        //         dir('weather-app') {
+        //             // Build ASP.NET app
+        //             sh 'dotnet build'
+        //         }
         
-                dir('weather-app/ClientApp') {
-                // Install Angular dependencies
-                sh 'npm install'
+        //         dir('weather-app/ClientApp') {
+        //         // Install Angular dependencies
+        //         sh 'npm install'
           
-                // Build Angular app
-                sh 'ng build --prod'
-                }
-            }
-        }
+        //         // Build Angular app
+        //         sh 'ng build --prod'
+        //         }
+        //     }
+        // }
 
         stage('Build and push app image') {      	
             steps{               
