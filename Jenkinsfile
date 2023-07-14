@@ -66,7 +66,7 @@ pipeline {
         sh 'aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
         
         // Apply Kubernetes deployment
-        sh 'kubectl apply -f deployment.yaml'
+        sh 'kubectl apply -f weather-app/deployment.yaml'
       }
       }
     }
