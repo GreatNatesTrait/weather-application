@@ -21,6 +21,10 @@ RUN unzip terraform.zip -d /usr/local/bin
 RUN apt-get install -y python3-pip
 RUN pip3 install awscli
 
+# Install Docker
+RUN curl -fsSL https://get.docker.com -o get-docker.sh
+RUN sh get-docker.sh
+
 # Expose ports for ASP.NET app and Angular app
 EXPOSE 5000
 EXPOSE 4200
