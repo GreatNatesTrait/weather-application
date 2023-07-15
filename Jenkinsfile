@@ -61,6 +61,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {       
                     // Update kubeconfig to connect to EKS cluster
+                    sh 'aws sts get-caller-identity'
                     sh 'aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
         
                     // Apply Kubernetes deployment
