@@ -39,7 +39,6 @@ pipeline {
                 sh 'docker build -t greatnate27/weather-application:latest .' 
                 sh 'docker push greatnate27/weather-application:latest'           
             }      
-
             post{
                 always {  
                 sh 'docker logout'     
