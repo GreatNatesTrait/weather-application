@@ -25,6 +25,12 @@ RUN pip3 install awscli
 RUN curl -fsSL https://get.docker.com -o get-docker.sh
 RUN sh get-docker.sh
 
+# Install kubectl
+RUN apt-get update && apt-get install -y apt-transport-https gnupg2 curl
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+RUN apt-get update && apt-get install -y kubectl
+
 # Expose ports for ASP.NET app and Angular app
 EXPOSE 5000
 EXPOSE 4200
