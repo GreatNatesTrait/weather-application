@@ -16,22 +16,6 @@ pipeline {
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         dir('weather-app') {
-        //             // Build ASP.NET app
-        //             sh 'dotnet build'
-        //         }
-        
-        //         dir('weather-app/ClientApp') {
-        //         // Install Angular dependencies
-        //         sh 'npm install'
-          
-        //         // Build Angular app
-        //         sh 'ng build --prod'
-        //         }
-        //     }
-        // }
 
         stage('Build and push app image') {      	
             steps{               
@@ -66,8 +50,43 @@ pipeline {
                     // Apply Kubernetes deployment
                     sh 'kubectl apply -f deployment.yaml'
                     sh 'kubectl create -f loadbalancer.yaml'
-                    sh 'kubectl get services'
                     }
+            }
+        }
+
+
+        stage('Show external address to load balancer') {
+            steps {             
+                script {
+                input "Continue?"                               
+                    withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'c49b4767-615c-47ed-8880-e33d5b620515',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                    sh 'kubectl get services'
+                    }                 
+                }
+            }
+        }
+
+
+        stage('Destroy services and deployment') {
+            steps {             
+                script {
+                input "Continue?"                               
+                    withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'c49b4767-615c-47ed-8880-e33d5b620515',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                    sh 'kubectl delete service service-loadbalancer'
+                    sh 'kubectl delete service kubernetes'
+                    sh 'kubectl delete deployment weather-deployment'
+                    }                 
+                }
             }
         }
     }
