@@ -9,6 +9,7 @@ pipeline {
         HOME = '.'
         DOCKERHUB_CREDENTIALS= credentials('b28bbdd7-0345-46b2-a3c8-050a04a90660')
     }
+    
     stages {
         stage('Checkout') {
             steps {
